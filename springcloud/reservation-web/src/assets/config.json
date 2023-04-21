@@ -1,0 +1,5 @@
+{
+    "masterFileUrl":"http://localhost:8080",
+    "fareUrl":"http://localhost:8080",
+    "scheduleUrl":"http://localhost:8080"
+}
