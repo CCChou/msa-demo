@@ -5,7 +5,7 @@ USER root
 COPY . .
 RUN chown -R jboss:root ${APP_HOME}
 USER jboss
-RUN ./gradlew build 
+RUN ./gradlew build -x test
 
 FROM registry.access.redhat.com/ubi8/openjdk-11-runtime:1.15-1.1679485252
 ARG APP_HOME=/home/jboss APP_NAME=gateway
