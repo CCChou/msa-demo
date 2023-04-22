@@ -49,6 +49,7 @@ dependencies {
 	implementation 'io.opentelemetry:opentelemetry-exporter-otlp-trace'
 	implementation 'io.grpc:grpc-okhttp:1.50.0'
 	implementation 'io.micrometer:micrometer-registry-prometheus'
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.2.32'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'

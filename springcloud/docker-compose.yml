@@ -1,0 +1,36 @@
+version: "3.9"
+services:
+  eureka:
+    build:
+      context: eureka
+      dockerfile: Dockerfile-build
+    ports:
+      - 8080:8080
+  web:
+    build:
+      context: reservation-web
+      dockerfile: Dockerfile-build
+  gateway:
+    build: 
+      context: gateway
+      dockerfile: Dockerfile-build
+    environment:
+      - MASTER_FILE_URI=http://master-file:8080
+      - FARE_URI=http://fare:8080
+      - SCHEDULE_URI=http://schedule:8080
+    ports:
+      - 8081:8080
+  schedule:
+    build:
+      context: schedule
+      dockerfile: Dockerfile-build
+  fare:
+    build:
+      context: fare
+      dockerfile: Dockerfile-build
+    environment:
+      - STATION_API=http://master-file:8080/api/master-files/stations
+  master-file:
+    build:
+      context: master-file
+      dockerfile: Dockerfile-build

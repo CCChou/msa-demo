@@ -4,6 +4,7 @@ WORKDIR ${APP_HOME}
 USER root
 COPY . .
 RUN chown -R jboss:root ${APP_HOME}
+RUN chmod +x ${APP_HOME}/gradlew
 USER jboss
 RUN ./gradlew build -x test
 

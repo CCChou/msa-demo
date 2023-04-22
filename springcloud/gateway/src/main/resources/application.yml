@@ -15,15 +15,15 @@ spring:
             - DELETE
       routes:
       - id: master-file
-        uri: ${MASTER_FILE_URI:http://127.0.0.1:8081}
+        uri: lb://master-file 
         predicates:
         - Path=/api/master-files/**
       - id: fare
-        uri: ${FARE_URI:http://127.0.0.1:8082}
+        uri: lb://fare
         predicates:
         - Path=/api/fare/**
       - id: schedule
-        uri: ${SCHEDULE_URI:http://127.0.0.1:8083}
+        uri: lb://schedule
         predicates:
         - Path=/api/schedule/**
   sleuth:
@@ -40,4 +40,12 @@ management:
         include:
         - health
         - info
-        - prometheus     
+        - prometheus 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:8080/eureka
+discovery:
+  locator:
+    enabled: true   
+    lower-case-service-id: true    
