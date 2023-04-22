@@ -18,19 +18,36 @@ services:
       - MASTER_FILE_URI=http://master-file:8080
       - FARE_URI=http://fare:8080
       - SCHEDULE_URI=http://schedule:8080
+      - JAEGER_URI=http://otel-collector:4317
     ports:
       - 8081:8080
   schedule:
     build:
       context: schedule
       dockerfile: Dockerfile-build
+    environment:
+      - JAEGER_URI=http://otel-collector:4317
   fare:
     build:
       context: fare
       dockerfile: Dockerfile-build
     environment:
       - STATION_API=http://master-file:8080/api/master-files/stations
+      - JAEGER_URI=http://otel-collector:4317
   master-file:
     build:
       context: master-file
       dockerfile: Dockerfile-build
+    environment:
+      - JAEGER_URI=http://otel-collector:4317
+  jaeger:
+    image: docker.io/jaegertracing/all-in-one:1.24
+    ports:
+      - 16686:16686
+  otel-collector:
+    image: docker.io/otel/opentelemetry-collector:0.47.0
+    command: [ "--config=/etc/otel-collector-config.yaml" ]
+    volumes:
+      - ./jaeger/otel-config.yaml:/etc/otel-collector-config.yaml
+    depends_on:
+      - jaeger
