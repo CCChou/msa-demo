@@ -1,0 +1,13 @@
+FROM registry.access.redhat.com/ubi8/nodejs-14:1-105.1681314079 as build
+COPY . .
+USER root
+RUN chown -R default:root .
+USER default
+RUN npm install && echo N | npm run build
+
+FROM registry.access.redhat.com/ubi8/nginx-120
+ARG APPDIR=/opt/app-root/src
+EXPOSE 8080
+COPY ./nginx.conf "${NGINX_CONF_PATH}"
+COPY --from=build ${APPDIR}/dist/reservation-web /opt/app-root/src
+CMD nginx -g "daemon off;"
