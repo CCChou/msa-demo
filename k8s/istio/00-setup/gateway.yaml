@@ -25,15 +25,29 @@ spec:
   http:
   - match:
     - uri:
-        prefix: /api
+        prefix: /api/master-files
     route:
     - destination:
-        host: caj-gateway
+        host: caj-master-file
         port:
           number: 8080
   - match:
     - uri:
-        prefix: /
+        prefix: /api/schedule
+    route:
+    - destination:
+        host: caj-schedule
+        port:
+          number: 8080
+  - match:
+    - uri:
+        prefix: /api/fare
+    route:
+    - destination:
+        host: caj-fare
+        port:
+          number: 8080
+  - match:
     route:
     - destination:
         host: caj-web

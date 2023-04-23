@@ -1,7 +1,0 @@
-kind: ConfigMap
-apiVersion: v1
-metadata:
-  name: web-config
-data:
-  config.json: >
-    {"masterFileUrl":"http://${NAMESPACE}.istio-gateway.apps.${HOST}","fareUrl":"http://${NAMESPACE}.istio-gateway.apps.${HOST}","scheduleUrl":"http://${NAMESPACE}.istio-gateway.apps.${HOST}"}
