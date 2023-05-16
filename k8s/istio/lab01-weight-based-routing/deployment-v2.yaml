@@ -1,55 +1,30 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: caj-master-file-v2
+  name: caj-fare-v2
   labels:
-    app: caj-master-file
+    app: caj-fare
     version: v2
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: caj-master-file
+      app: caj-fare
       version: v2
   template:
     metadata:
       annotations:
         sidecar.istio.io/inject: 'true'
       labels:
-        app: caj-master-file
+        app: caj-fare
         version: v2
     spec:
       containers:
-        - name: caj-master-file
-          image: 'docker.io/d0ck3rj3ff/caj-master-file:latest'
+        - name: caj-fare
+          image: 'docker.io/d0ck3rj3ff/caj-fare:latest'
           ports:
             - containerPort: 8080
               protocol: TCP
           env:
-            - name: DB_DIALECT
-              valueFrom:
-                configMapKeyRef:
-                  name: db-config
-                  key: DB_DIALECT
-            - name: DB_DRIVER
-              valueFrom:
-                configMapKeyRef:
-                  name: db-config
-                  key: DB_DRIVER
-            - name: DB_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: db-config
-                  key: DB_URL
-            - name: DB_USER
-              valueFrom:
-                configMapKeyRef:
-                  name: db-config
-                  key: DB_USER
-            - name: DB_PXD
-              valueFrom:
-                secretKeyRef:
-                  name: db-secret
-                  key: DB_PXD
-            - name: WEB_TITTLE
-              value: Day2 CAJ v2
+            - name: STATION_API
+              value: 'http://caj-master-file:8080/api/master-files/stations'
